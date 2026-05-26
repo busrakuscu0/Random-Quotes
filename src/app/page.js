@@ -21,7 +21,10 @@ export default function Home() {
   const { quote, author, likeCount } = updatequotes[quoteIndex];
 
   function handleClick() {
-    const next = getUniqueRandomNumber(quoteIndex, quotesWithLikeCount.length);
+    const next = getUniqueRandomNumber(
+      quoteIndex,
+      quotesWithLikeCount.length - 1,
+    );
     setQuoteIndex(next);
   }
 
