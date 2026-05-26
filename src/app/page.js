@@ -4,7 +4,6 @@ import { quotes as initialQuotes } from "@/quotes";
 import { Button } from "@/components/typography/Button";
 import { useState } from "react";
 import { getRandomNumber } from "@/utils/helper-functions";
-import { getUniqueRandomNumber } from "@/utils/helper-functions";
 import { H3 } from "@/components/typography/H3";
 import { H6 } from "@/components/typography/H6";
 
@@ -19,14 +18,6 @@ export default function Home() {
   const [quoteIndex, setQuoteIndex] = useState(0);
 
   const { quote, author, likeCount } = updatequotes[quoteIndex];
-
-  function handleClick() {
-    const next = getUniqueRandomNumber(
-      quoteIndex,
-      quotesWithLikeCount.length - 1,
-    );
-    setQuoteIndex(next);
-  }
 
   function updateLikeCount() {
     const nextQuotes = updatequotes.map((q, index) => {

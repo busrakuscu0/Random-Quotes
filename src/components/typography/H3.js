@@ -4,15 +4,15 @@ export function H3({ element, children }) {
       return (
         <p className="text-2xl font-semibold text-slate-900">{children}</p>
       );
-      break;
     case "span":
       return (
         <span className="text-2xl font-semibold text-slate-900">
           {children}
         </span>
       );
-      break;
     default:
-      <h3 className="text-2xl font-semibold text-slate-900">{children}</h3>;
+      return (
+        <h3 className="text-2xl font-semibold text-slate-900">{children}</h3>
+      );
   }
 }
