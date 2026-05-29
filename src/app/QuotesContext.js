@@ -18,17 +18,41 @@ export function QuotesContextProvider({ children }) {
     const updatedQuotes = quotes.map((quote, id) => {
       if (id === quoteIndex) {
         const updatedLikedBy =
-          typeof quote.likedBy === "number" ? quote.likedBy++ : 1;
-        return { ...quote, likedBy: updatedLikedBy };
+          typeof quote.likedBy === "number" ? quote.likedBy : 0;
+        return { ...quote, likedBy: updatedLikedBy + 1 };
       }
       return quote;
     });
     setQuotes(updatedQuotes);
   }
 
+  function handleUnlikeQuote() {
+    const updatedQuotes = quotes.map((quote, id) => {
+      if (id === quoteIndex) {
+        const updatedLikedBy =
+          typeof quote.likedBy === "number" ? quote.likedBy : 0;
+        return {
+          ...quote,
+          likedBy: updatedLikedBy > 0 ? updatedLikedBy - 1 : 0,
+        };
+      }
+      return quote;
+    });
+    setQuotes(updatedQuotes);
+  }
+
+  const likedQuotes = quotes.filter((quote) => quote.likedBy > 0);
+
   return (
     <QuotesContext
-      value={{ quotes, quoteIndex, handleQuoteIndexUpdate, handleLikeQuote }}
+      value={{
+        quotes,
+        quoteIndex,
+        handleQuoteIndexUpdate,
+        handleLikeQuote,
+        handleUnlikeQuote,
+        likedQuotes,
+      }}
     >
       {children}
     </QuotesContext>

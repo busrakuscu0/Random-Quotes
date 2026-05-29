@@ -11,16 +11,6 @@ export default function Home() {
     useContext(QuotesContext);
   const { quote, author, likedBy } = quotes[quoteIndex];
 
-  function updateLikeCount() {
-    const nextQuotes = updatequotes.map((q, index) => {
-      if (index === quoteIndex) {
-        return { ...q, likeCount: q.likeCount + 1 };
-      }
-      return q;
-    });
-    setUpdateQuotes(nextQuotes);
-  }
-
   return (
     <main className="min-h-screen flex items-center justify-center bg-slate-200">
       <section className="min-h-[250px] w-full max-w-lg bg-slate-50/50 rounded-md p-10 flex flex-col gap-2">

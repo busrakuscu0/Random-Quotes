@@ -24,18 +24,27 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <nav>
-        <ul>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/user/quotes/liked">Liked Quotes</Link>
-          </li>
-        </ul>
-      </nav>
       <QuotesContextProvider>
-        <body className="min-h-full">{children}</body>
+        <body className="min-h-full">
+          <nav className="bg-slate-200 pt-8">
+            <ul className="flex flex-row items-baseline justify-center gap-24">
+              <li>
+                <Link href="/" className="hover:text-slate-600">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/user/quotes/liked"
+                  className="hover:text-slate-600"
+                >
+                  Liked Quotes
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          {children}
+        </body>
       </QuotesContextProvider>
     </html>
   );
