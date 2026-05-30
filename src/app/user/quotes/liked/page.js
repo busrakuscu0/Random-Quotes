@@ -1,30 +1,27 @@
 "use client";
 
+import { Button } from "@/components/typography/Button";
 import { H3 } from "@/components/typography/H3";
 import { useContext } from "react";
 import { QuotesContext } from "@/app/QuotesContext";
 
 export default function LikedQuotesPage() {
   const { handleUnlikeQuote, likedQuotes } = useContext(QuotesContext);
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-slate-200">
+    <main className="min-h-screen flex flex-col items-center justify-start pt-16 gap-8 bg-slate-200">
       <H3 element={"h1"}>Liked Quotes</H3>
-      <ul>
-        {likedQuotes.map((item, index) => (
+      <ul className="flex flex-col gap-4">
+        {likedQuotes.map(({ quote, author }) => (
           <li
-            key={index}
-            className="flex justify-between items-center border-b pb-2 last:border-0 last:pb-0 gap-4"
+            key={quote}
+            className="flex justify-between items-baseline p-4 gap-4 bg-mist-100 rounded-xl"
           >
-            <div>
-              <p className="text-slate-800 italic">"{item.quote}"</p>
-              <span className="text-xs text-slate-500">- {item.author}</span>
-            </div>
-            <button
-              onClick={() => handleUnlikeQuote(item.quote)}
-              className="text-red-500 hover:text-red-700 text-sm font-semibold shrink-0"
-            >
-              Remove
-            </button>
+            <span>{quote}</span>
+            <span>"{author}"</span>
+            <Button variant={"icon"} onClick={() => handleUnlikeQuote(quote)}>
+              Unlike
+            </Button>
           </li>
         ))}
       </ul>

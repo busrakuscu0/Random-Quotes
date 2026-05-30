@@ -26,17 +26,15 @@ export function QuotesContextProvider({ children }) {
     setQuotes(updatedQuotes);
   }
 
-  function handleUnlikeQuote() {
-    const updatedQuotes = quotes.map((quote, id) => {
-      if (id === quoteIndex) {
-        const updatedLikedBy =
-          typeof quote.likedBy === "number" ? quote.likedBy : 0;
+  function handleUnlikeQuote(quoteContent) {
+    const updatedQuotes = quotes.map((q) => {
+      if (q.quote === quoteContent) {
         return {
-          ...quote,
-          likedBy: updatedLikedBy > 0 ? updatedLikedBy - 1 : 0,
+          ...q,
+          likedBy: 0,
         };
       }
-      return quote;
+      return q;
     });
     setQuotes(updatedQuotes);
   }

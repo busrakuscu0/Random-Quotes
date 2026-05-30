@@ -8,7 +8,7 @@ export function Button({ variant, onClick, children }) {
       buttonStyles = "bg-slate-200/90 text-slate-800 rounded-md";
       break;
     case "icon":
-      buttonStyles = "hover:bg-slate-200/90 rounded-full";
+      buttonStyles = "hover:bg-slate-300/90 rounded-full cursor-pointer";
       break;
     default:
       buttonStyles = "bg-slate-400/90 text-slate-900 rounded-md";

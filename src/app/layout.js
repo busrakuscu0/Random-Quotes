@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
     >
       <QuotesContextProvider>
         <body className="min-h-full">
-          <nav className="bg-slate-200 pt-8">
+          <nav className="bg-slate-200 font-semibold pt-8">
             <ul className="flex flex-row items-baseline justify-center gap-24">
               <li>
                 <Link href="/" className="hover:text-slate-600">
