@@ -1,5 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
+import { TopNav } from "@/app/Navbar";
 import { QuotesContextProvider } from "@/app/QuotesContext";
 import "./globals.css";
 
@@ -26,23 +26,7 @@ export default function RootLayout({ children }) {
     >
       <QuotesContextProvider>
         <body className="min-h-full">
-          <nav className="bg-slate-200 font-semibold pt-8">
-            <ul className="flex flex-row items-baseline justify-center gap-24">
-              <li>
-                <Link href="/" className="hover:text-slate-600">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/user/quotes/liked"
-                  className="hover:text-slate-600"
-                >
-                  Liked Quotes
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <TopNav />
           {children}
         </body>
       </QuotesContextProvider>
