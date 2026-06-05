@@ -11,10 +11,10 @@ export function QuoteCard({
   handleQuoteIndexUpdate,
 }) {
   return (
-    <Card size="lg" className="mx-auto w-full max-w-sm">
+    <Card size="lg">
       <CardContent className="flex flex-col">
         <div className="self-end">
-          <Button variant="destructive" onClick={handleLikeQuote}>
+          <Button variant="destructive" size="sm" onClick={handleLikeQuote}>
             ❤️ {likedBy ?? 0}
           </Button>
         </div>

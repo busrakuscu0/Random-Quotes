@@ -1,6 +1,5 @@
 import { cva } from "class-variance-authority";
 import { NavigationMenu as NavigationMenuPrimitive } from "radix-ui";
-
 import { cn } from "@/lib/utils";
 import { CaretDownIcon } from "@phosphor-icons/react";
 
@@ -10,7 +9,7 @@ function NavigationMenu({ className, children, viewport = true, ...props }) {
       data-slot="navigation-menu"
       data-viewport={viewport}
       className={cn(
-        "group/navigation-menu relative mx-auto my-2 flex w-full max-w-6xl flex-1 items-center justify-start",
+        "group/navigation-menu relative mx-auto my-4 flex w-full max-w-3xl md:max-w-5xl lg:max-w-7xl flex-1 items-center justify-start",
         className,
       )}
       {...props}
@@ -26,7 +25,7 @@ function NavigationMenuList({ className, ...props }) {
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
       className={cn(
-        "group flex flex-1 list-none items-center justify-center gap-0",
+        "group flex flex-1 list-none items-start md:items-center justify-center gap-0",
         className,
       )}
       {...props}
@@ -101,7 +100,7 @@ function NavigationMenuLink({ className, ...props }) {
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "flex items-center gap-1.5 rounded-2xl p-3 text-sm text-sidebar-foreground transition-all outline-none hover:bg-chart-1 hover:text-sidebar-foreground focus:bg-chart-1 focus:text-sidebar-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-xl data-[active=true]:bg-chart-4/50 data-[active=true]:text-sidebar-foreground data-[active=true]:hover:bg-chart-1 data-[active=true]:focus:bg-chart-1 [&_svg:not([class*='size-'])]:size-4",
+        "flex items-center gap-1.5 rounded-2xl p-2 md:p-3 text-sm md:text-md text-sidebar-foreground transition-all outline-none hover:bg-chart-1 dark:hover:bg-chart-5 hover:text-sidebar-foreground focus:bg-chart-1 dark:focus:bg-chart-5 focus:text-sidebar-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-xl data-[active=true]:bg-chart-4/50 data-[active=true]:text-sidebar-foreground data-[active=true]:hover:bg-chart-1 dark:data-[active=true]:hover:bg-chart-5 data-[active=true]:focus:bg-chart-1 dark:data-[active=true]:focus:bg-chart-5 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
