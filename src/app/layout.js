@@ -24,12 +24,12 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <QuotesContextProvider>
-        <body className="min-h-full">
+      <body className="min-h-full">
+        <QuotesContextProvider>
           <TopNav />
           {children}
-        </body>
-      </QuotesContextProvider>
+        </QuotesContextProvider>
+      </body>
     </html>
   );
 }
