@@ -31,7 +31,7 @@ export function QuotesContextProvider({ children }) {
       if (q.quote === quoteContent) {
         return {
           ...q,
-          likedBy: 0,
+          likedBy: q.likedBy > 1 ? q.likedBy - 1 : 0
         };
       }
       return q;
