@@ -1,4 +1,11 @@
-export function H6({ element, children }) {
+import {ReactNode} from "react";
+
+export interface H6Interface {
+  element: "p" | "span";
+  children: ReactNode;
+}
+
+export function H6({ element, children }: H6Interface) {
   switch (element) {
     case "p":
       return (

@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { TopNav } from "@/app/Navbar";
 import { QuotesContextProvider } from "@/app/QuotesContext";
 import "./globals.css";
+import { ReactNode } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,11 @@ export const metadata = {
   description: "Random Quotes Application 200825",
 };
 
-export default function RootLayout({ children }) {
+interface RootLayoutInterface {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutInterface) {
   return (
     <html
       lang="en"

@@ -3,7 +3,12 @@ import { NavigationMenu as NavigationMenuPrimitive } from "radix-ui";
 import { cn } from "@/lib/utils";
 import { CaretDownIcon } from "@phosphor-icons/react";
 
-function NavigationMenu({ className, children, viewport = true, ...props }) {
+function NavigationMenu({
+  className = "",
+  children,
+  viewport = true,
+  ...props
+}) {
   return (
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
@@ -20,7 +25,7 @@ function NavigationMenu({ className, children, viewport = true, ...props }) {
   );
 }
 
-function NavigationMenuList({ className, ...props }) {
+function NavigationMenuList({ className = "", ...props }) {
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
@@ -33,7 +38,7 @@ function NavigationMenuList({ className, ...props }) {
   );
 }
 
-function NavigationMenuItem({ className, ...props }) {
+function NavigationMenuItem({ className = "", ...props }) {
   return (
     <NavigationMenuPrimitive.Item
       data-slot="navigation-menu-item"
@@ -44,7 +49,7 @@ function NavigationMenuItem({ className, ...props }) {
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-2xl px-4.5 py-2.5 text-sm font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted",
+  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-2xl px-4.5 py-2.5 text-sm font-medium transition-all outline-none hover:bg-chart-4/60 focus:bg-chart-4/60 focus-visible:ring-chart-4/40-[3px] focus-visible:ring-chart-4/40 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-chart-4/60/50 data-popup-open:hover:bg-chart-4/60 data-open:bg-chart-4/60/50 data-open:hover:bg-chart-4/60 data-open:focus:bg-chart-4/60",
 );
 
 function NavigationMenuTrigger({ className, children, ...props }) {
@@ -63,7 +68,7 @@ function NavigationMenuTrigger({ className, children, ...props }) {
   );
 }
 
-function NavigationMenuContent({ className, ...props }) {
+function NavigationMenuContent({ className = "", ...props }) {
   return (
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
@@ -76,7 +81,7 @@ function NavigationMenuContent({ className, ...props }) {
   );
 }
 
-function NavigationMenuViewport({ className, ...props }) {
+function NavigationMenuViewport({ className = "", ...props }) {
   return (
     <div
       className={cn(
@@ -100,7 +105,7 @@ function NavigationMenuLink({ className, ...props }) {
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "flex items-center gap-1.5 rounded-2xl p-2 md:p-3 text-sm md:text-md text-sidebar-foreground transition-all outline-none hover:bg-chart-1 dark:hover:bg-chart-5 hover:text-sidebar-foreground focus:bg-chart-1 dark:focus:bg-chart-5 focus:text-sidebar-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-xl data-[active=true]:bg-chart-4/50 data-[active=true]:text-sidebar-foreground data-[active=true]:hover:bg-chart-1 dark:data-[active=true]:hover:bg-chart-5 data-[active=true]:focus:bg-chart-1 dark:data-[active=true]:focus:bg-chart-5 [&_svg:not([class*='size-'])]:size-4",
+        "flex items-center gap-1.5 rounded-2xl p-2 md:p-3 text-sm md:text-md text-sidebar-foreground transition-all outline-none hover:bg-chart-4/60 dark:hover:bg-chart-5 hover:text-sidebar-foreground focus:bg-chart-4/60 dark:focus:bg-chart-5 focus:text-sidebar-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-xl data-[active=true]:bg-chart-4/40 data-[active=true]:text-sidebar-foreground data-[active=true]:hover:bg-chart-4/60 dark:data-[active=true]:hover:bg-chart-5 data-[active=true]:focus:bg-chart-4/60 dark:data-[active=true]:focus:bg-chart-5 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}

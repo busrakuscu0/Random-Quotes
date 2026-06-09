@@ -1,9 +1,6 @@
 "use client";
 
-import { Button } from "@/components/typography/Button";
 import { useContext } from "react";
-import { H3 } from "@/components/typography/H3";
-import { H6 } from "@/components/typography/H6";
 import { QuotesContext } from "@/app/QuotesContext";
 import { QuoteCard } from "@/app/QuoteCard";
 

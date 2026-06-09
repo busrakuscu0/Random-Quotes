@@ -1,4 +1,11 @@
-export function H3({ element, children }) {
+import {ReactNode} from "react";
+
+export interface H3Interface {
+  element: "p" | "span" | "h1";
+  children: ReactNode;
+}
+
+export function H3({ element, children }: H3Interface) {
   switch (element) {
     case "p":
       return <p className="text-2xl font-semibold ">{children}</p>;
@@ -8,6 +15,12 @@ export function H3({ element, children }) {
           {children}
         </span>
       );
+    case "h1":
+      return (
+        <h1 className="text-2xl font-semibold text-slate-900">
+          {children}
+        </h1>
+      );  
     default:
       return (
         <h3 className="text-2xl font-semibold text-slate-900">{children}</h3>

@@ -7,6 +7,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 const appRoutes = [
@@ -26,7 +27,7 @@ export function TopNav() {
       <NavigationMenuList>
         {appRoutes.map(({ name, url }) => (
           <NavigationMenuItem key={name}>
-            <NavigationMenuLink asChild>
+            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
               <Link href={url}>{name}</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>

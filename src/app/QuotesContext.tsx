@@ -1,9 +1,27 @@
 "use client";
 import { createContext, useState } from "react";
-import { quotes as initialQuotes } from "@/quotes";
+import { quotes as initialQuotes, type Quote } from "@/quotes";
 import { getRandomNumber } from "@/utils/helper-functions";
 
-export const QuotesContext = createContext({});
+interface QuoteContextInterface {
+  quotes: Quote[];
+  quoteIndex: number;
+  handleQuoteIndexUpdate: () => void;
+  handleLikeQuote: () => void;
+  handleUnlikeQuote: (quoteContent: string) => void;
+  likedQuotes: Quote[];
+}
+
+const InitialQuotesContext = {
+  quotes: [],
+  quoteIndex: 0,
+  handleQuoteIndexUpdate: () => console.log(""),
+  handleLikeQuote: () => console.log(""),
+  handleUnlikeQuote: (quoteContent: string) => console.log(""),
+  likedQuotes: []
+}
+
+export const QuotesContext = createContext<QuoteContextInterface>(InitialQuotesContext);
 
 export function QuotesContextProvider({ children }) {
   const [quoteIndex, setQuoteIndex] = useState(0);
@@ -26,7 +44,7 @@ export function QuotesContextProvider({ children }) {
     setQuotes(updatedQuotes);
   }
 
-  function handleUnlikeQuote(quoteContent) {
+  function handleUnlikeQuote(quoteContent: string) {
     const updatedQuotes = quotes.map((q) => {
       if (q.quote === quoteContent) {
         return {
