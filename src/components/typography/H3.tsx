@@ -1,11 +1,11 @@
 import {ReactNode} from "react";
 
-export interface H3Interface {
+interface H3Interface {
   element: "p" | "span" | "h1";
   children: ReactNode;
 }
 
-export function H3({ element, children }: H3Interface) {
+export function H3({ element, children }: H3Interface): ReactNode {
   switch (element) {
     case "p":
       return <p className="text-2xl font-semibold ">{children}</p>;

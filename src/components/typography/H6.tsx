@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 
-export interface H6Interface {
+interface H6Interface {
   element: "p" | "span";
   children: ReactNode;
 }
