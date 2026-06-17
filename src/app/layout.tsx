@@ -27,7 +27,7 @@ export default function RootLayout({ children }: RootLayoutInterface) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-background dark:bg-background text-foreground dark:text-foreground">
         <QuotesContextProvider>
