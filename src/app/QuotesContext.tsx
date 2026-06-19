@@ -18,10 +18,11 @@ const InitialQuotesContext = {
   handleQuoteIndexUpdate: () => console.log(""),
   handleLikeQuote: () => console.log(""),
   handleUnlikeQuote: (quoteContent: string) => console.log(""),
-  likedQuotes: []
-}
+  likedQuotes: [],
+};
 
-export const QuotesContext = createContext<QuoteContextInterface>(InitialQuotesContext);
+export const QuotesContext =
+  createContext<QuoteContextInterface>(InitialQuotesContext);
 
 export function QuotesContextProvider({ children }) {
   const [quoteIndex, setQuoteIndex] = useState(0);
