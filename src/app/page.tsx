@@ -3,6 +3,7 @@
 import { useContext } from "react";
 import { QuotesContext } from "@/app/QuotesContext";
 import { QuoteCard } from "@/app/QuoteCard";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function Home() {
   const { quotes, quoteIndex, handleQuoteIndexUpdate, handleLikeQuote } =
@@ -18,6 +19,7 @@ export default function Home() {
         author={author}
         handleQuoteIndexUpdate={handleQuoteIndexUpdate}
       />
+      <Toaster />
     </main>
   );
 }
