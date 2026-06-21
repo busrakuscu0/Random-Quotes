@@ -1,6 +1,6 @@
 import { auth0 } from "./lib/auth0";
 
-export async function proxy(request: any) {
+export async function proxy(request) {
   const authResponse = await auth0.middleware(request);
 
   // Always return the auth response.

@@ -1,7 +1,8 @@
 "use client";
 import { createContext, useState } from "react";
-import { quotes as initialQuotes, type Quote } from "@/quotes";
+import { quotes as initialQuotes, quotes, type Quote } from "@/quotes";
 import { getRandomNumber } from "@/utils/helper-functions";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 interface QuoteContextInterface {
   quotes: Quote[];
@@ -17,14 +18,21 @@ const InitialQuotesContext = {
   quoteIndex: 0,
   handleQuoteIndexUpdate: () => console.log(""),
   handleLikeQuote: () => console.log(""),
-  handleUnlikeQuote: (quoteContent: string) => console.log(""),
+  handleUnlikeQuote: () => console.log(""),
   likedQuotes: [],
 };
 
 export const QuotesContext =
   createContext<QuoteContextInterface>(InitialQuotesContext);
 
-export function QuotesContextProvider({ children }) {
+export function QuotesContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { user } = useUser();
+  const userSub = user?.sub;
+
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [quotes, setQuotes] = useState(initialQuotes);
 
@@ -36,9 +44,11 @@ export function QuotesContextProvider({ children }) {
   function handleLikeQuote() {
     const updatedQuotes = quotes.map((quote, id) => {
       if (id === quoteIndex) {
-        const updatedLikedBy =
-          typeof quote.likedBy === "number" ? quote.likedBy : 0;
-        return { ...quote, likedBy: updatedLikedBy + 1 };
+        const currentLikedBy = Array.isArray(quote.likedBy)
+          ? quote.likedBy
+          : [];
+
+        return { ...quote, likedBy: [...currentLikedBy, userSub] };
       }
       return quote;
     });
@@ -48,9 +58,10 @@ export function QuotesContextProvider({ children }) {
   function handleUnlikeQuote(quoteContent: string) {
     const updatedQuotes = quotes.map((q) => {
       if (q.quote === quoteContent) {
+        const currentLikedBy = Array.isArray(q.likedBy) ? q.likedBy : [];
         return {
           ...q,
-          likedBy: 0,
+          likedBy: currentLikedBy.filter((id) => id !== userSub),
         };
       }
       return q;
@@ -58,7 +69,15 @@ export function QuotesContextProvider({ children }) {
     setQuotes(updatedQuotes);
   }
 
-  const likedQuotes = quotes.filter((quote) => quote.likedBy > 0);
+  const likedQuotes = quotes.filter(
+    (quote) =>
+      userSub &&
+      Array.isArray(quote.likedBy) &&
+      quote.likedBy.includes(userSub),
+  );
+
+  console.log("Context'teki userSub:", userSub);
+  console.log("Filtrelenmiş likedQuotes:", likedQuotes);
 
   return (
     <QuotesContext
