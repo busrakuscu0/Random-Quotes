@@ -20,14 +20,11 @@ export function SwitchDarkMode() {
   return (
     <div className="flex items-center gap-2">
       <Switch
-        className=""
         id="dark-mode"
         checked={isDark}
         onCheckedChange={handleThemeChange}
       />
-      <Label className="" htmlFor="dark-mode">
-        Dark Mode
-      </Label>
+      <Label htmlFor="dark-mode">Dark Mode</Label>
     </div>
   );
 }

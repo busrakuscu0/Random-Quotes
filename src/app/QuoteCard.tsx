@@ -34,7 +34,7 @@ export function QuoteCard({
 
   return (
     <Card size="lg">
-      <CardContent className="">
+      <CardContent>
         <div className="self-end">
           <Button variant="destructive" size="sm" onClick={onLikeClick}>
             ❤️ {likedBy?.length ?? 0}
@@ -43,7 +43,9 @@ export function QuoteCard({
         <H3 element="p">{quote}</H3>
         <H6 element="span">- {author}</H6>
         <div className="mt-4 md:mt-6 flex flex-row gap-2 md:gap-4 justify-end">
-          <Button onClick={handleQuoteIndexUpdate}>Next Quote</Button>
+          <Button className="w-full" onClick={handleQuoteIndexUpdate}>
+            Next Quote
+          </Button>
         </div>
       </CardContent>
     </Card>

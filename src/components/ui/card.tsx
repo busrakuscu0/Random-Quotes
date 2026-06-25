@@ -60,7 +60,7 @@ function CardAction({ className, ...props }) {
   );
 }
 
-function CardContent({ className, ...props }) {
+function CardContent({ className = "", ...props }) {
   return (
     <div
       data-slot="card-content"

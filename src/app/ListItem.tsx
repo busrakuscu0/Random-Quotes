@@ -19,11 +19,11 @@ export function ListItem() {
   return (
     <div className="flex w-full max-w-sm md:max-w-lg flex-col gap-6">
       {likedQuotes.map(({ quote, author }) => (
-        <Item className="" key={quote} variant="outline">
-          <ItemContent className="">
+        <Item key={quote} variant="outline">
+          <ItemContent>
             <div className="flex flex-col">
-              <ItemTitle className="">{quote}</ItemTitle>
-              <ItemDescription className=""> - {author}</ItemDescription>
+              <ItemTitle>{quote}</ItemTitle>
+              <ItemDescription> - {author}</ItemDescription>
             </div>
             <div>
               <Button size="xs" onClick={() => handleToggleLike(quote)}>

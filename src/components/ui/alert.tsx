@@ -17,7 +17,7 @@ const alertVariants = cva(
   },
 );
 
-function Alert({ className, variant, ...props }) {
+function Alert({ className = "", variant, ...props }) {
   return (
     <div
       data-slot="alert"
@@ -28,7 +28,7 @@ function Alert({ className, variant, ...props }) {
   );
 }
 
-function AlertTitle({ className, ...props }) {
+function AlertTitle({ className = "", ...props }) {
   return (
     <div
       data-slot="alert-title"

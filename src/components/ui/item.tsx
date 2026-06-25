@@ -111,7 +111,7 @@ function ItemMedia({
   );
 }
 
-function ItemContent({ className, ...props }) {
+function ItemContent({ className = "", ...props }) {
   return (
     <div
       data-slot="item-content"
@@ -124,7 +124,7 @@ function ItemContent({ className, ...props }) {
   );
 }
 
-function ItemTitle({ className, ...props }) {
+function ItemTitle({ className = "", ...props }) {
   return (
     <div
       data-slot="item-title"
@@ -137,7 +137,7 @@ function ItemTitle({ className, ...props }) {
   );
 }
 
-function ItemDescription({ className, ...props }) {
+function ItemDescription({ className = "", ...props }) {
   return (
     <p
       data-slot="item-description"
