@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
-
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -10,6 +9,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { SwitchDarkMode } from "./SwitchDarkMode";
 
 const appRoutes = [
   {
@@ -77,6 +77,7 @@ export function TopNav() {
           </NavigationMenuItem>
         )}
       </NavigationMenuList>
+      <SwitchDarkMode />
     </NavigationMenu>
   );
 }

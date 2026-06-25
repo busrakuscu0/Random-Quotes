@@ -6,7 +6,7 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { toast } from "sonner";
 
 interface QuoteCardProps {
-  handleLikeQuote: (userSub: string) => void;
+  handleToggleLike: (userSub: string) => void;
   likedBy: string[];
   quote: string;
   author: string;
@@ -14,7 +14,7 @@ interface QuoteCardProps {
 }
 
 export function QuoteCard({
-  handleLikeQuote,
+  handleToggleLike,
   likedBy,
   quote,
   author,
@@ -26,7 +26,7 @@ export function QuoteCard({
 
   const onLikeClick = () => {
     if (user) {
-      handleLikeQuote(user.sub);
+      handleToggleLike(quote);
     } else {
       toast.warning("You need to be logged in to like a quote.");
     }
@@ -34,7 +34,7 @@ export function QuoteCard({
 
   return (
     <Card size="lg">
-      <CardContent className="flex flex-col">
+      <CardContent className="">
         <div className="self-end">
           <Button variant="destructive" size="sm" onClick={onLikeClick}>
             ❤️ {likedBy?.length ?? 0}
@@ -42,7 +42,7 @@ export function QuoteCard({
         </div>
         <H3 element="p">{quote}</H3>
         <H6 element="span">- {author}</H6>
-        <div className="mt-6 flex flex-row gap-4 justify-end">
+        <div className="mt-4 md:mt-6 flex flex-row gap-2 md:gap-4 justify-end">
           <Button onClick={handleQuoteIndexUpdate}>Next Quote</Button>
         </div>
       </CardContent>

@@ -29,7 +29,7 @@ export default function RootLayout({ children }: RootLayoutInterface) {
       lang="en"
       className={`${inter.variable} ${playfairDisplay.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-background dark:bg-background text-foreground dark:text-foreground">
+      <body className="min-h-full bg-background text-foreground">
         <QuotesContextProvider>
           <TopNav />
           {children}

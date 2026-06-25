@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import { ReactNode } from "react";
 
 interface H6Interface {
   element: "p" | "span";
@@ -9,15 +9,17 @@ export function H6({ element, children }: H6Interface) {
   switch (element) {
     case "p":
       return (
-        <p className="text-md font-semibold text-slate-900 self-end">
-          {children}
-        </p>
+        <p className="text-sm md:text-md font-semibold self-end">{children}</p>
       );
     case "span":
-      return <span className="text-md font-semibold self-end">{children}</span>;
+      return (
+        <span className="text-sm md:text-md font-semibold self-end">
+          {children}
+        </span>
+      );
     default:
       return (
-        <h6 className="text-md font-semibold text-slate-900 self-end">
+        <h6 className="text-sm md:text-md font-semibold self-end">
           {children}
         </h6>
       );

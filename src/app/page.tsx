@@ -6,14 +6,14 @@ import { QuoteCard } from "@/app/QuoteCard";
 import { Toaster } from "@/components/ui/sonner";
 
 export default function Home() {
-  const { quotes, quoteIndex, handleQuoteIndexUpdate, handleLikeQuote } =
+  const { quotes, quoteIndex, handleQuoteIndexUpdate, handleToggleLike } =
     useContext(QuotesContext);
   const { quote, author, likedBy } = quotes[quoteIndex];
 
   return (
     <main className="min-h-screen flex items-center justify-center">
       <QuoteCard
-        handleLikeQuote={handleLikeQuote}
+        handleToggleLike={handleToggleLike}
         likedBy={likedBy}
         quote={quote}
         author={author}

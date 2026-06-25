@@ -10,7 +10,7 @@ import { QuotesContext } from "@/app/QuotesContext";
 import { AlertLikedQuotes } from "./AlertLikedQuotes";
 
 export function ListItem() {
-  const { likedQuotes, handleUnlikeQuote } = useContext(QuotesContext);
+  const { likedQuotes, handleToggleLike } = useContext(QuotesContext);
 
   if (likedQuotes.length === 0) {
     return <AlertLikedQuotes />;
@@ -20,13 +20,13 @@ export function ListItem() {
     <div className="flex w-full max-w-sm md:max-w-lg flex-col gap-6">
       {likedQuotes.map(({ quote, author }) => (
         <Item className="" key={quote} variant="outline">
-          <ItemContent className="flex flex-row gap-2  items-center justify-between p-2">
+          <ItemContent className="">
             <div className="flex flex-col">
               <ItemTitle className="">{quote}</ItemTitle>
               <ItemDescription className=""> - {author}</ItemDescription>
             </div>
             <div>
-              <Button size="xs" onClick={() => handleUnlikeQuote(quote)}>
+              <Button size="xs" onClick={() => handleToggleLike(quote)}>
                 Unlike
               </Button>
             </div>

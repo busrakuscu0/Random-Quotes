@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 
 function Card({ className = "", size = "default", ...props }) {
@@ -7,7 +6,7 @@ function Card({ className = "", size = "default", ...props }) {
       data-slot="card"
       data-size={size}
       className={cn(
-        "group/card flex flex-col gap-4 md:gap-6 overflow-hidden mx-auto w-full max-w-sm md:max-w-md rounded-2xl bg-card dark:bg-card/50 py-6 md:py-8 text-xs md:text-sm text-card-foreground dark:text-card-foreground ring-1 ring-foreground/10 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+        "group/card flex flex-col gap-4 md:gap-6 overflow-hidden mx-auto w-full max-w-sm md:max-w-md rounded-2xl bg-card dark:bg-card/50 py-6 md:py-8 text-xs md:text-sm text-card-foreground ring-1 ring-foreground/10 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
         className,
       )}
       {...props}
@@ -65,7 +64,10 @@ function CardContent({ className, ...props }) {
   return (
     <div
       data-slot="card-content"
-      className={cn("px-6 md:px-8 group-data-[size=sm]/card:px-4", className)}
+      className={cn(
+        "flex flex-col px-6 md:px-8 group-data-[size=sm]/card:px-4",
+        className,
+      )}
       {...props}
     />
   );

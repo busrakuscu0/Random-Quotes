@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { CaretDownIcon } from "@phosphor-icons/react";
 
 function NavigationMenu({
-  className = "",
+  className = "flex justify-between items-center",
   children,
   viewport = true,
   ...props
@@ -14,7 +14,7 @@ function NavigationMenu({
       data-slot="navigation-menu"
       data-viewport={viewport}
       className={cn(
-        "group/navigation-menu relative mx-auto my-4 flex w-full max-w-3xl md:max-w-5xl lg:max-w-7xl flex-1 items-center justify-start",
+        "group/navigation-menu relative mx-auto my-2 md:my-4 flex w-full max-w-3xl md:max-w-5xl lg:max-w-7xl flex-1 items-center justify-start",
         className,
       )}
       {...props}
@@ -49,7 +49,7 @@ function NavigationMenuItem({ className = "", ...props }) {
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-2xl px-4.5 py-2.5 text-sm font-medium transition-all outline-none hover:bg-chart-4/60 focus:bg-chart-4/60 focus-visible:ring-chart-4/40-[3px] focus-visible:ring-chart-4/40 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-chart-4/60/50 data-popup-open:hover:bg-chart-4/60 data-open:bg-chart-4/60/50 data-open:hover:bg-chart-4/60 data-open:focus:bg-chart-4/60",
+  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-2xl px-2.5 py-1.5 md:px-4.5 md:py-2.5 text-xs md:text-sm font-medium transition-all outline-none hover:bg-chart-4/60 focus:bg-chart-4/60 focus-visible:ring-chart-4/40-[3px] focus-visible:ring-chart-4/40 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-chart-4/60/50 data-popup-open:hover:bg-chart-4/60 data-open:bg-chart-4/60/50 data-open:hover:bg-chart-4/60 data-open:focus:bg-chart-4/60",
 );
 
 function NavigationMenuTrigger({ className, children, ...props }) {
