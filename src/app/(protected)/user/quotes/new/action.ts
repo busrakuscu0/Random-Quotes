@@ -24,9 +24,9 @@ const NewQuote = z.object({
 });
 
 export async function addNewQuote(
-  currentState: AddNewQuoteState,
+  _currentState: AddNewQuoteState,
   formData: FormData,
-) {
+): Promise<AddNewQuoteState> {
   const session = await auth0.getSession();
 
   if (!session) {
@@ -37,12 +37,24 @@ export async function addNewQuote(
   }
 
   const rawData = {
-    author: formData.get("author"),
-    quote: formData.get("quote"),
+    author: String(formData.get("author") ?? ""),
+    quote: String(formData.get("quote") ?? ""),
   };
 
   const validationOutput = NewQuote.safeParse(rawData);
-  return {
-    success: false,
-  };
+
+  if (!validationOutput.success) {
+    const validationErrors = z.flattenError(validationOutput.error);
+
+    return {
+      success: false,
+      errors: validationErrors,
+      data: rawData,
+    };
+  } else {
+    return {
+      success: true,
+      data: validationOutput.data,
+    };
+  }
 }
