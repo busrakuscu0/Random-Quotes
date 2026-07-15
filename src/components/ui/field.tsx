@@ -25,7 +25,7 @@ function FieldLegend({ className = "", variant = "legend", ...props }) {
       data-slot="field-legend"
       data-variant={variant}
       className={cn(
-        "mb-6 md:mb-10 font-semibold data-[variant=label]:text-sm data-[variant=legend]:text-base",
+        "mb-6 md:mb-10 font-semibold text-lg md:text-2xl text-secondary-foreground",
         className,
       )}
       {...props}
@@ -100,7 +100,7 @@ function FieldLabel({ className = "", ...props }) {
     <Label
       data-slot="field-label"
       className={cn(
-        "group/field-label peer/field-label flex w-fit gap-1 md:gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-xl has-[>[data-slot=field]]:border *:data-[slot=field]:p-4 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10",
+        "group/field-label peer/field-label text-secondary-foreground flex w-fit gap-1 md:gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-xl has-[>[data-slot=field]]:border *:data-[slot=field]:p-4 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10",
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
         className,
       )}

@@ -14,6 +14,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useActionState } from "react";
 import { addNewQuote } from "./action";
 import { Quote } from "@/quotes";
+import { Spinner } from "@/components/ui/spinner";
+import { CheckCircleIcon } from "@phosphor-icons/react";
 
 export interface AddNewQuoteState {
   success: boolean;
@@ -32,20 +34,36 @@ export default function AddNewQuotePage() {
     initialAddNewQuoteState,
   );
 
-  if (isPending) return <p>Loading...</p>;
+  if (isPending)
+    return (
+      <div className="flex justify-center mt-30 md:mt-60">
+        <Button size="lg" disabled>
+          <Spinner data-icon="inline-start" />
+          Loading...
+        </Button>
+      </div>
+    );
 
   return (
     <main className="min-h-screen flex-col items-center justify-items-center pt-20">
       {state.success ? (
-        <>
-          <h1>
+        <div className="w-full max-w-sm md:max-w-xl p-8 md:p-16 flex flex-col justify-center items-center gap-6 bg-chart-6 text-secondary-foreground border rounded-md">
+          <CheckCircleIcon size={32} color="#138b27" />
+          <h1 className="text-2xl font-extrabold">Quote Submitted</h1>
+          <p className="text-center">
             Thank you for adding a new quote! It's now sent to administrator for
             review.
-          </h1>
-          <p>Click here to add another quote.</p>
-        </>
+          </p>
+          <Button onClick={() => window.location.reload()}>
+            Add Another Quote
+          </Button>
+        </div>
       ) : (
-        <form className="w-full max-w-md" action={dispatchAction}>
+        <form
+          className="w-full max-w-sm md:max-w-xl p-8 md:p-16 bg-chart-6 border rounded-md"
+          action={dispatchAction}
+          noValidate
+        >
           <FieldGroup>
             <FieldSet>
               <FieldLegend>Create A New Quote</FieldLegend>
@@ -58,7 +76,6 @@ export default function AddNewQuotePage() {
                     name="author"
                     placeholder="Evil Rabbit"
                     aria-describedby="author-error"
-                    required
                     aria-invalid={!!state.errors?.fieldErrors?.author}
                     defaultValue={state.data?.author}
                   />
@@ -79,9 +96,7 @@ export default function AddNewQuotePage() {
                     id="quote"
                     name="quote"
                     placeholder="Add the quote here..."
-                    className="resize-none"
                     aria-describedby="quote-error"
-                    required
                     aria-invalid={!!state.errors?.fieldErrors?.quote}
                     defaultValue={state.data?.quote}
                   />
