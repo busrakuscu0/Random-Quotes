@@ -13,16 +13,15 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useActionState } from "react";
 import { addNewQuote } from "./action";
-import { Quote } from "@/quotes";
 import { Spinner } from "@/components/ui/spinner";
 import { CheckCircleIcon } from "@phosphor-icons/react";
-
-export interface AddNewQuoteState {
-  success: boolean;
-  errors?: any;
-  message?: string;
-  data?: Partial<Quote>;
-}
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  AddNewQuoteState,
+  NewQuoteInput,
+  NewQuoteSchema,
+} from "@/types/quotes";
 
 const initialAddNewQuoteState: AddNewQuoteState = {
   success: false,
@@ -33,6 +32,14 @@ export default function AddNewQuotePage() {
     addNewQuote,
     initialAddNewQuoteState,
   );
+
+  const {
+    register,
+    formState: { errors: clientSideErrors },
+  } = useForm<NewQuoteInput>({
+    mode: "onBlur",
+    resolver: zodResolver(NewQuoteSchema),
+  });
 
   if (isPending)
     return (
@@ -73,11 +80,11 @@ export default function AddNewQuotePage() {
                   <Input
                     type="text"
                     id="author"
-                    name="author"
                     placeholder="Evil Rabbit"
                     aria-describedby="author-error"
                     aria-invalid={!!state.errors?.fieldErrors?.author}
                     defaultValue={state.data?.author}
+                    {...register("author")}
                   />
                   {state.errors?.fieldErrors?.author && (
                     <FieldError
@@ -88,17 +95,26 @@ export default function AddNewQuotePage() {
                       {state.errors?.fieldErrors?.author}
                     </FieldError>
                   )}
+                  {clientSideErrors.author && (
+                    <FieldError
+                      id="author-error"
+                      aria-live="polite"
+                      errors={[{ message: clientSideErrors.author.message }]}
+                    >
+                      {clientSideErrors.author.message}
+                    </FieldError>
+                  )}
                 </Field>
 
                 <Field>
                   <FieldLabel htmlFor="quote">Quote</FieldLabel>
                   <Textarea
                     id="quote"
-                    name="quote"
                     placeholder="Add the quote here..."
                     aria-describedby="quote-error"
                     aria-invalid={!!state.errors?.fieldErrors?.quote}
                     defaultValue={state.data?.quote}
+                    {...register("quote")}
                   />
                   {state.errors?.fieldErrors?.quote && (
                     <FieldError
@@ -107,6 +123,15 @@ export default function AddNewQuotePage() {
                       errors={state.errors?.fieldErrors?.quote}
                     >
                       {state.errors?.fieldErrors?.quote}
+                    </FieldError>
+                  )}
+                  {clientSideErrors.quote && (
+                    <FieldError
+                      id="quote-error"
+                      aria-live="polite"
+                      errors={[{ message: clientSideErrors.quote.message }]}
+                    >
+                      {clientSideErrors.quote.message}
                     </FieldError>
                   )}
                 </Field>
