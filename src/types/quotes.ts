@@ -1,4 +1,13 @@
+import { ReactNode } from "react";
 import z from "zod";
+
+export const categories = [
+  "Life",
+  "Love",
+  "Inspirational",
+  "Motivational",
+  "Wisdom",
+];
 
 export const NewQuoteSchema = z.object({
   author: z
@@ -17,12 +26,12 @@ export const NewQuoteSchema = z.object({
       message:
         "Quote should be 300 characters long maximum.Please try to shorter quote.",
     }),
+  category: z.enum(categories, {
+    message: "Please select a valid category from the dropdown.",
+  }),
 });
 
-export interface NewQuoteInput {
-  author: string;
-  quote: string;
-}
+export type NewQuoteInput = z.infer<typeof NewQuoteSchema>;
 
 export interface AddNewQuoteState {
   success: boolean;
@@ -35,4 +44,34 @@ export interface Quote {
   quote: string;
   author: string;
   likedBy?: string[];
+}
+
+export interface QuoteCardProps {
+  handleToggleLike: (userSub: string) => void;
+  likedBy: string[];
+  quote: string;
+  author: string;
+  handleQuoteIndexUpdate: () => void;
+}
+
+export interface RootLayoutInterface {
+  children: ReactNode;
+}
+
+export interface QuoteContextInterface {
+  quotes: Quote[];
+  quoteIndex: number;
+  handleQuoteIndexUpdate: () => void;
+  handleToggleLike: (quoteContent: string) => void;
+  likedQuotes: Quote[];
+}
+
+export interface H6Interface {
+  element: "p" | "span";
+  children: ReactNode;
+}
+
+export interface H3Interface {
+  element: "p" | "span" | "h1";
+  children: ReactNode;
 }

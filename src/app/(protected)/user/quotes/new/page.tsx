@@ -22,6 +22,16 @@ import {
   NewQuoteInput,
   NewQuoteSchema,
 } from "@/types/quotes";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { categories } from "@/types/quotes";
 
 const initialAddNewQuoteState: AddNewQuoteState = {
   success: false,
@@ -86,16 +96,8 @@ export default function AddNewQuotePage() {
                     defaultValue={state.data?.author}
                     {...register("author")}
                   />
-                  {state.errors?.fieldErrors?.author && (
-                    <FieldError
-                      id="author-error"
-                      aria-live="polite"
-                      errors={state.errors?.fieldErrors?.author}
-                    >
-                      {state.errors?.fieldErrors?.author}
-                    </FieldError>
-                  )}
-                  {clientSideErrors.author && (
+
+                  {clientSideErrors.author ? (
                     <FieldError
                       id="author-error"
                       aria-live="polite"
@@ -103,6 +105,16 @@ export default function AddNewQuotePage() {
                     >
                       {clientSideErrors.author.message}
                     </FieldError>
+                  ) : (
+                    state.errors?.fieldErrors?.author && (
+                      <FieldError
+                        id="author-error"
+                        aria-live="polite"
+                        errors={state.errors?.fieldErrors?.author}
+                      >
+                        {state.errors?.fieldErrors?.author}
+                      </FieldError>
+                    )
                   )}
                 </Field>
 
@@ -116,22 +128,57 @@ export default function AddNewQuotePage() {
                     defaultValue={state.data?.quote}
                     {...register("quote")}
                   />
-                  {state.errors?.fieldErrors?.quote && (
-                    <FieldError
-                      id="quote-error"
-                      aria-live="polite"
-                      errors={state.errors?.fieldErrors?.quote}
-                    >
-                      {state.errors?.fieldErrors?.quote}
-                    </FieldError>
-                  )}
-                  {clientSideErrors.quote && (
+
+                  {clientSideErrors.quote ? (
                     <FieldError
                       id="quote-error"
                       aria-live="polite"
                       errors={[{ message: clientSideErrors.quote.message }]}
                     >
                       {clientSideErrors.quote.message}
+                    </FieldError>
+                  ) : (
+                    state.errors?.fieldErrors?.quote && (
+                      <FieldError
+                        id="quote-error"
+                        aria-live="polite"
+                        errors={state.errors?.fieldErrors?.quote}
+                      >
+                        {state.errors?.fieldErrors?.quote}
+                      </FieldError>
+                    )
+                  )}
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="category">Tag</FieldLabel>
+                  <Select name="category" defaultValue={state.data?.category}>
+                    <SelectTrigger
+                      id="category"
+                      aria-describedby="category-error"
+                      aria-invalid={!!state.errors?.fieldErrors?.category}
+                      {...register("category")}
+                    >
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Categories</SelectLabel>
+                        {categories.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  {state.errors?.fieldErrors?.category && (
+                    <FieldError
+                      id="category-error"
+                      aria-live="polite"
+                      errors={state.errors?.fieldErrors?.category}
+                    >
+                      {state.errors?.fieldErrors?.category}
                     </FieldError>
                   )}
                 </Field>

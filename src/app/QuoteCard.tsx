@@ -4,14 +4,7 @@ import { H3 } from "@/components/typography/H3";
 import { H6 } from "@/components/typography/H6";
 import { useUser } from "@auth0/nextjs-auth0";
 import { toast } from "sonner";
-
-interface QuoteCardProps {
-  handleToggleLike: (userSub: string) => void;
-  likedBy: string[];
-  quote: string;
-  author: string;
-  handleQuoteIndexUpdate: () => void;
-}
+import { QuoteCardProps } from "@/types/quotes";
 
 export function QuoteCard({
   handleToggleLike,

@@ -1,9 +1,4 @@
-import { ReactNode } from "react";
-
-interface H6Interface {
-  element: "p" | "span";
-  children: ReactNode;
-}
+import { H6Interface } from "@/types/quotes";
 
 export function H6({ element, children }: H6Interface) {
   switch (element) {

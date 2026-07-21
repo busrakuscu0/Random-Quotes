@@ -20,6 +20,7 @@ export async function addNewQuote(
   const rawData = {
     author: String(formData.get("author") ?? ""),
     quote: String(formData.get("quote") ?? ""),
+    category: String(formData.get("category") ?? ""),
   };
 
   const validationOutput = NewQuoteSchema.safeParse(rawData);
@@ -30,7 +31,7 @@ export async function addNewQuote(
     return {
       success: false,
       errors: validationErrors,
-      data: rawData,
+      data: rawData as unknown as z.infer<typeof NewQuoteSchema>,
     };
   } else {
     return {

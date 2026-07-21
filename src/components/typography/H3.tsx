@@ -1,9 +1,5 @@
+import { H3Interface } from "@/types/quotes";
 import { ReactNode } from "react";
-
-interface H3Interface {
-  element: "p" | "span" | "h1";
-  children: ReactNode;
-}
 
 export function H3({ element, children }: H3Interface): ReactNode {
   switch (element) {

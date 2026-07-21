@@ -1,16 +1,9 @@
 "use client";
 import { createContext, useState } from "react";
-import { quotes as initialQuotes, type Quote } from "@/quotes";
+import { quotes as initialQuotes } from "@/quotes";
 import { getRandomNumber } from "@/utils/helper-functions";
 import { useUser } from "@auth0/nextjs-auth0/client";
-
-interface QuoteContextInterface {
-  quotes: Quote[];
-  quoteIndex: number;
-  handleQuoteIndexUpdate: () => void;
-  handleToggleLike: (quoteContent: string) => void;
-  likedQuotes: Quote[];
-}
+import { QuoteContextInterface } from "@/types/quotes";
 
 const InitialQuotesContext = {
   quotes: [],
