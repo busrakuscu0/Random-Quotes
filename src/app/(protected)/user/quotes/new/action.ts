@@ -49,7 +49,7 @@ export async function addNewQuote(
       updatedAt: now,
     };
 
-    const newDoc = await col.insertOne(newQuote);
+    await col.insertOne(newQuote);
 
     return {
       success: true,
