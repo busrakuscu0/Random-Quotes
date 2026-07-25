@@ -41,7 +41,7 @@ function AlertTitle({ className = "", ...props }) {
   );
 }
 
-function AlertDescription({ className, ...props }) {
+function AlertDescription({ className = "", ...props }) {
   return (
     <div
       data-slot="alert-description"

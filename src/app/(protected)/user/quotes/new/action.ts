@@ -3,7 +3,7 @@
 import { auth0 } from "@/lib/auth0";
 import * as z from "zod";
 import { AddNewQuoteState, NewQuoteSchema } from "@/types/quotes";
-import { getDb } from "@/lib/db";
+import { Collections, getDb } from "@/lib/db";
 
 export async function addNewQuote(
   _currentState: AddNewQuoteState,
@@ -37,7 +37,7 @@ export async function addNewQuote(
     };
   } else {
     const db = await getDb();
-    const col = db.collection("quotes");
+    const col = db.collection(Collections.quotes);
     const now = new Date();
 
     const newQuote = {

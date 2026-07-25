@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { auth0 } from "@/lib/auth0";
 import { redirect, RedirectType } from "next/navigation";
 
@@ -10,7 +12,14 @@ export default async function ProtectedLayout({ children }) {
   const { user, error, loading } = await auth0.getSession();
 
   if (loading) {
-    return <span>Loading...</span>;
+    return (
+      <div className="flex justify-center mt-30 md:mt-60">
+        <Button size="lg" disabled>
+          <Spinner data-icon="inline-start" />
+          Loading...
+        </Button>
+      </div>
+    );
   }
 
   if (error) {

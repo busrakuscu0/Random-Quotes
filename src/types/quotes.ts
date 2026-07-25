@@ -41,9 +41,14 @@ export interface AddNewQuoteState {
 }
 
 export interface Quote {
+  _id: unknown;
   quote: string;
   author: string;
   likedBy?: string[];
+  createdBy: string;
+  adminApproved: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface QuoteCardProps {
@@ -61,6 +66,8 @@ export interface RootLayoutInterface {
 export interface QuoteContextInterface {
   quotes: Quote[];
   quoteIndex: number;
+  isLoading: boolean;
+  error: string | null;
   handleQuoteIndexUpdate: () => void;
   handleToggleLike: (quoteContent: string) => void;
   likedQuotes: Quote[];
