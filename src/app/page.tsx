@@ -53,20 +53,22 @@ export default function Home() {
   if (!currentQuote) {
     return (
       <main>
-        <Empty>
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <FileMinusIcon />
-            </EmptyMedia>
-            <EmptyTitle>No Quotes Yet</EmptyTitle>
-            <EmptyDescription>
-              Add one or approve quotes in the database.
-            </EmptyDescription>
-          </EmptyHeader>
-          <EmptyContent>
-            <Link href="/user/quotes/new">Add New Quotes</Link>
-          </EmptyContent>
-        </Empty>
+        <div className="border rounded-md bg-accent max-w-md mx-auto my-20 md:my-36">
+          <Empty>
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <FileMinusIcon />
+              </EmptyMedia>
+              <EmptyTitle>No Quotes Yet</EmptyTitle>
+              <EmptyDescription>
+                Add one or approve quotes in the database.
+              </EmptyDescription>
+            </EmptyHeader>
+            <EmptyContent>
+              <Link href="/user/quotes/">Add New Quotes</Link>
+            </EmptyContent>
+          </Empty>
+        </div>
       </main>
     );
   }
