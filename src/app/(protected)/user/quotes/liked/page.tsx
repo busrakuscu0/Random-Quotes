@@ -1,6 +1,6 @@
 "use client";
 
-import { LikedQuotes } from "@/app/LikeQuotes";
+import { LikedQuotes } from "@/app/LikedQuotes";
 
 export default function LikedQuotesPage() {
   return (

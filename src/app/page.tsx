@@ -29,24 +29,28 @@ export default function Home() {
   } = useContext(QuotesContext);
 
   if (isLoading) {
-    <main>
-      <div className="flex justify-center mt-30 md:mt-60">
-        <Button size="lg" disabled>
-          <Spinner data-icon="inline-start" />
-          Loading...
-        </Button>
-      </div>
-    </main>;
+    return (
+      <main>
+        <div className="flex justify-center mt-30 md:mt-60">
+          <Button size="lg" disabled>
+            <Spinner data-icon="inline-start" />
+            Loading...
+          </Button>
+        </div>
+      </main>
+    );
   }
 
   if (error) {
-    <main>
-      <Alert variant="destructive" className="max-w-sm md:max-w-md">
-        <WarningCircleIcon />
-        <AlertTitle>Loading failed</AlertTitle>
-        <AlertDescription>{error}</AlertDescription>
-      </Alert>
-    </main>;
+    return (
+      <main>
+        <Alert variant="destructive" className="max-w-sm md:max-w-md">
+          <WarningCircleIcon />
+          <AlertTitle>Loading failed</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      </main>
+    );
   }
 
   const currentQuote = quotes[quoteIndex];

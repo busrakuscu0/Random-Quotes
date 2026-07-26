@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Item,
@@ -13,7 +15,7 @@ import { H3 } from "@/components/typography/H3";
 export function LikedQuotes() {
   const { likedQuotes, handleToggleLike } = useContext(QuotesContext);
 
-  if (likedQuotes.length === 0) {
+  if (!likedQuotes || likedQuotes.length === 0) {
     return <EmptyLikedQuotes />;
   }
 
