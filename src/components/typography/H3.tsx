@@ -4,7 +4,11 @@ import { ReactNode } from "react";
 export function H3({ element, children }: H3Interface): ReactNode {
   switch (element) {
     case "p":
-      return <p className="text-lg md:text-2xl font-semibold">{children}</p>;
+      return (
+        <p className="text-lg md:text-3xl lg:text-4xl font-bold max-w-2xl text-chart-5">
+          {children}
+        </p>
+      );
     case "span":
       return (
         <span className="text-lg md:text-2xl font-semibold">{children}</span>

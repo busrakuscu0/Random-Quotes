@@ -8,7 +8,7 @@ export function H6({ element, children }: H6Interface) {
       );
     case "span":
       return (
-        <span className="text-sm md:text-md font-semibold self-end">
+        <span className="text-sm md:text-lg font-light text-chart-5">
           {children}
         </span>
       );

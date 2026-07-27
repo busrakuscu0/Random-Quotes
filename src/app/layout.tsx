@@ -25,7 +25,7 @@ export default function RootLayout({ children }: RootLayoutInterface) {
       lang="en"
       className={`${inter.variable} ${playfairDisplay.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-background text-foreground">
+      <body className="min-h-full bg-muted text-foreground">
         <QuotesContextProvider>
           <TopNav />
           {children}

@@ -6,7 +6,7 @@ function Card({ className = "", size = "default", ...props }) {
       data-slot="card"
       data-size={size}
       className={cn(
-        "group/card flex flex-col gap-4 md:gap-6 overflow-hidden mx-auto w-full max-w-sm md:max-w-md rounded-2xl bg-card dark:bg-card/50 py-6 md:py-8 text-xs md:text-sm text-card-foreground ring-1 ring-foreground/10 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+        "group/card flex flex-col gap-4 md:gap-6 overflow-hidden mx-auto p-12 min-h-72 w-full max-w-3xl md:max-w-5xl lg:max-w-7xl rounded-lg bg-chart-6 text-xs md:text-lg text-card-foreground ring-1 ring-foreground/10 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
         className,
       )}
       {...props}

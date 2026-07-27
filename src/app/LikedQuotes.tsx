@@ -23,8 +23,8 @@ export function LikedQuotes() {
     <>
       <H3 element={"h1"}>My Liked Quotes</H3>
       <div className="flex w-full max-w-sm md:max-w-lg flex-col gap-6">
-        {likedQuotes.map(({ quote, author }) => (
-          <Item key={quote} variant="outline">
+        {likedQuotes.map(({ _id, quote, author }) => (
+          <Item key={String(_id) || quote} variant="outline">
             <ItemContent>
               <div className="flex flex-col">
                 <ItemTitle>{quote}</ItemTitle>
