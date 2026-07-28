@@ -98,8 +98,12 @@ export function QuotesContextProvider({
           q._id === quoteId ? { ...q, ...updatedData } : q,
         ),
       );
+      toast.success("Quote updated successfully!");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to edit quote!");
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to edit quote!";
+      setError(errorMessage);
+      toast.error(errorMessage);
     }
   }
 

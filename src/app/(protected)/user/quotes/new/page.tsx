@@ -79,7 +79,7 @@ export default function AddNewQuotePage() {
 
   const onSubmit = async (data: NewQuoteInput) => {
     if (editId) {
-      await handleQuoteEdit(editId, {
+      handleQuoteEdit(editId, {
         author: data.author,
         quote: data.quote,
         category: data.category,

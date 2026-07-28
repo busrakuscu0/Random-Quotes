@@ -3,7 +3,6 @@
 import { useContext } from "react";
 import { QuotesContext } from "@/app/QuotesContext";
 import { QuoteCard } from "@/app/QuoteCard";
-import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -91,7 +90,6 @@ export default function Home() {
         handleQuoteIndexUpdate={handleQuoteIndexUpdate}
         handleQuoteDelete={handleQuoteDelete}
       />
-      <Toaster />
     </main>
   );
 }

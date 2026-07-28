@@ -3,6 +3,7 @@ import { TopNav } from "@/app/Navbar";
 import { QuotesContextProvider } from "@/app/QuotesContext";
 import "./globals.css";
 import { RootLayoutInterface } from "@/types/quotes";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: RootLayoutInterface) {
           <TopNav />
           {children}
         </QuotesContextProvider>
+        <Toaster />
       </body>
     </html>
   );
