@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useActionState } from "react";
+import { useActionState, useContext, useEffect } from "react";
 import { addNewQuote } from "./action";
 import { Spinner } from "@/components/ui/spinner";
 import { CheckCircleIcon } from "@phosphor-icons/react";
@@ -32,12 +32,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categories } from "@/types/quotes";
+import { useRouter, useSearchParams } from "next/navigation";
+import { QuotesContext } from "@/app/QuotesContext";
 
 const initialAddNewQuoteState: AddNewQuoteState = {
   success: false,
 };
 
 export default function AddNewQuotePage() {
+  const searchParams = useSearchParams();
+  const editId = searchParams.get("id");
+  const router = useRouter();
+
+  const { quotes, handleQuoteEdit } = useContext(QuotesContext);
+
   const [state, dispatchAction, isPending] = useActionState(
     addNewQuote,
     initialAddNewQuoteState,
@@ -45,11 +53,46 @@ export default function AddNewQuotePage() {
 
   const {
     register,
+    reset,
+    handleSubmit,
     formState: { errors: clientSideErrors },
   } = useForm<NewQuoteInput>({
     mode: "onBlur",
     resolver: zodResolver(NewQuoteSchema),
   });
+
+  useEffect(() => {
+    if (editId && quotes.length > 0) {
+      const quoteToEdit = quotes.find(
+        (q) => q._id === editId || q._id === editId,
+      );
+      if (quoteToEdit) {
+        reset({
+          author: quoteToEdit.author,
+          quote: quoteToEdit.quote,
+          category: quoteToEdit.category,
+        });
+      }
+    }
+  }, [editId, quotes, reset]);
+
+  const onSubmit = async (data: NewQuoteInput) => {
+    if (editId) {
+      handleQuoteEdit(editId, {
+        author: data.author,
+        quote: data.quote,
+        category: data.category,
+      });
+      router.push("/");
+    } else {
+      const formData = new FormData();
+      formData.append("author", data.author);
+      formData.append("quote", data.quote);
+      formData.append("category", data.category);
+
+      dispatchAction(formData);
+    }
+  };
 
   if (isPending)
     return (
@@ -78,12 +121,15 @@ export default function AddNewQuotePage() {
       ) : (
         <form
           className="w-full max-w-sm md:max-w-xl p-8 md:p-16 bg-chart-6 border rounded-md"
-          action={dispatchAction}
+          onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
+          <input type="hidden" name="id" value={editId || ""} />
           <FieldGroup>
             <FieldSet>
-              <FieldLegend>Create A New Quote</FieldLegend>
+              <FieldLegend>
+                {editId ? "Edit Quote" : "Create A New Quote"}
+              </FieldLegend>
               <FieldGroup>
                 <Field>
                   <FieldLabel htmlFor="author">Author</FieldLabel>
@@ -185,7 +231,7 @@ export default function AddNewQuotePage() {
               </FieldGroup>
             </FieldSet>
             <Field orientation="horizontal">
-              <Button type="submit">Create</Button>
+              <Button type="submit">{editId ? "Update" : "Create"}</Button>
               <Button variant="outline" type="reset">
                 Clear
               </Button>

@@ -26,6 +26,7 @@ export default function Home() {
     error,
     handleQuoteIndexUpdate,
     handleToggleLike,
+    handleQuoteDelete,
   } = useContext(QuotesContext);
 
   if (isLoading) {
@@ -82,11 +83,13 @@ export default function Home() {
   return (
     <main className="min-h-screen flex items-center justify-center">
       <QuoteCard
+        id={currentQuote._id}
+        quote={currentQuote.quote}
+        author={currentQuote.author}
+        likedBy={currentQuote.likedBy}
         handleToggleLike={handleToggleLike}
-        likedBy={likedBy}
-        quote={quote}
-        author={author}
         handleQuoteIndexUpdate={handleQuoteIndexUpdate}
+        handleQuoteDelete={handleQuoteDelete}
       />
       <Toaster />
     </main>

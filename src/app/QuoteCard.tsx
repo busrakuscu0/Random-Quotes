@@ -7,13 +7,16 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { toast } from "sonner";
 import { QuoteCardProps } from "@/types/quotes";
 import { HeartIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react";
+import Link from "next/link";
 
 export function QuoteCard({
+  id,
   handleToggleLike,
   likedBy,
   quote,
   author,
   handleQuoteIndexUpdate,
+  handleQuoteDelete,
 }: QuoteCardProps) {
   const { user, isLoading } = useUser();
 
@@ -59,10 +62,18 @@ export function QuoteCard({
           </Button>
         </div>
         <div className="flex gap-1 md:gap-2">
-          <Button variant="secondary" size="icon" className="px-4 md:px-6">
-            <PencilSimpleIcon />
-          </Button>
-          <Button variant="secondary" size="icon" className="px-4 md:px-6">
+          <Link href={`/user/quotes/new?id=${id}`}>
+            <Button variant="secondary" size="icon" className="px-4 md:px-6">
+              <PencilSimpleIcon />
+            </Button>
+          </Link>
+
+          <Button
+            variant="secondary"
+            size="icon"
+            onClick={() => handleQuoteDelete(quote)}
+            className="px-4 md:px-6"
+          >
             <TrashIcon />
           </Button>
         </div>

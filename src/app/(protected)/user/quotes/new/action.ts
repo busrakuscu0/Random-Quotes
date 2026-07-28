@@ -4,6 +4,7 @@ import { auth0 } from "@/lib/auth0";
 import * as z from "zod";
 import { AddNewQuoteState, NewQuoteSchema } from "@/types/quotes";
 import { Collections, getDb } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export async function addNewQuote(
   _currentState: AddNewQuoteState,
@@ -18,6 +19,8 @@ export async function addNewQuote(
       message: "Please log in to add a new quote.",
     };
   }
+
+  const quoteId = String(formData.get("id") ?? "");
 
   const rawData = {
     author: String(formData.get("author") ?? ""),
@@ -40,16 +43,34 @@ export async function addNewQuote(
     const col = db.collection(Collections.quotes);
     const now = new Date();
 
-    const newQuote = {
-      quote: validationOutput.data.quote,
-      author: validationOutput.data.author,
-      createdBy: user.sub,
-      adminApproved: false,
-      createdAt: now,
-      updatedAt: now,
-    };
+    if (quoteId) {
+      await col.updateOne(
+        { _id: new Object(quoteId) },
+        {
+          $set: {
+            quote: validationOutput.data.quote,
+            author: validationOutput.data.author,
+            category: rawData.category,
+            updatedAt: now,
+            adminApproved: false,
+          },
+        },
+      );
+    } else {
+      const newQuote = {
+        quote: validationOutput.data.quote,
+        author: validationOutput.data.author,
+        category: rawData.category,
+        createdBy: user.sub,
+        adminApproved: false,
+        createdAt: now,
+        updatedAt: now,
+      };
 
-    await col.insertOne(newQuote);
+      await col.insertOne(newQuote);
+    }
+
+    revalidatePath("/");
 
     return {
       success: true,

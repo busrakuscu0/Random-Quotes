@@ -41,9 +41,10 @@ export interface AddNewQuoteState {
 }
 
 export interface Quote {
-  _id: unknown;
+  _id: string;
   quote: string;
   author: string;
+  category: string;
   likedBy?: string[];
   createdBy: string;
   adminApproved: boolean;
@@ -52,11 +53,13 @@ export interface Quote {
 }
 
 export interface QuoteCardProps {
+  id: string;
   handleToggleLike: (userSub: string) => void;
   likedBy: string[];
   quote: string;
   author: string;
   handleQuoteIndexUpdate: () => void;
+  handleQuoteDelete: (quoteId: string) => void;
 }
 
 export interface RootLayoutInterface {
@@ -70,6 +73,11 @@ export interface QuoteContextInterface {
   error: string | null;
   handleQuoteIndexUpdate: () => void;
   handleToggleLike: (quoteContent: string) => void;
+  handleQuoteEdit: (
+    quoteId: string,
+    updatedData: { quote?: string; author?: string; category?: string },
+  ) => void;
+  handleQuoteDelete: (quoteId: string) => void;
   likedQuotes: Quote[];
 }
 

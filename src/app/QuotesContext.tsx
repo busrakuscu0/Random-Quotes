@@ -11,6 +11,8 @@ const InitialQuotesContext = {
   error: null,
   handleQuoteIndexUpdate: () => {},
   handleToggleLike: () => {},
+  handleQuoteEdit: () => {},
+  handleQuoteDelete: () => {},
   likedQuotes: [],
 };
 
@@ -29,6 +31,8 @@ export function QuotesContextProvider({
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const currentQuote = quotes[quoteIndex];
 
   useEffect(() => {
     async function fetchData() {
@@ -73,6 +77,49 @@ export function QuotesContextProvider({
     setQuotes(updatedQuotes);
   }
 
+  async function handleQuoteEdit(
+    quoteId: string,
+    updatedData: { quote?: string; author?: string; category?: string },
+  ) {
+    try {
+      const response = await fetch(`/api/quotes/${quoteId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to edit quote! Status: ${response.status}`);
+      }
+
+      setQuotes((prevQuotes) =>
+        prevQuotes.map((q) =>
+          q._id === quoteId ? { ...q, ...updatedData } : q,
+        ),
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to edit quote!");
+    }
+  }
+
+  async function handleQuoteDelete(quoteId: string) {
+    try {
+      const response = await fetch(`/api/quotes/${quoteId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete quote! Status: ${response.status}`);
+      }
+      setQuotes((prevQuotes) => prevQuotes.filter((q) => q._id !== quoteId));
+      handleQuoteIndexUpdate();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete quote!");
+    }
+  }
+
   const likedQuotes = quotes.filter(
     (quote) =>
       userSub &&
@@ -89,6 +136,8 @@ export function QuotesContextProvider({
         error,
         handleQuoteIndexUpdate,
         handleToggleLike,
+        handleQuoteEdit,
+        handleQuoteDelete,
         likedQuotes,
       }}
     >
