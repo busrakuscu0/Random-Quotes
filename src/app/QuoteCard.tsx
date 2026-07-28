@@ -8,6 +8,17 @@ import { toast } from "sonner";
 import { QuoteCardProps } from "@/types/quotes";
 import { HeartIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react";
 import Link from "next/link";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export function QuoteCard({
   id,
@@ -68,14 +79,30 @@ export function QuoteCard({
             </Button>
           </Link>
 
-          <Button
-            variant="secondary"
-            size="icon"
-            onClick={() => handleQuoteDelete(quote)}
-            className="px-4 md:px-6"
-          >
-            <TrashIcon />
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="secondary" size="icon" className="px-4 md:px-6">
+                <TrashIcon />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently delete the quote.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  variant="destructive"
+                  onClick={() => handleQuoteDelete(id)}
+                >
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </CardContent>
     </Card>

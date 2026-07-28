@@ -15,7 +15,7 @@ import { useActionState, useContext, useEffect } from "react";
 import { addNewQuote } from "./action";
 import { Spinner } from "@/components/ui/spinner";
 import { CheckCircleIcon } from "@phosphor-icons/react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form"; // CONTROLLER EKLENDİ
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   AddNewQuoteState,
@@ -55,6 +55,7 @@ export default function AddNewQuotePage() {
     register,
     reset,
     handleSubmit,
+    control, // CONTROL EKLENDİ
     formState: { errors: clientSideErrors },
   } = useForm<NewQuoteInput>({
     mode: "onBlur",
@@ -78,7 +79,7 @@ export default function AddNewQuotePage() {
 
   const onSubmit = async (data: NewQuoteInput) => {
     if (editId) {
-      handleQuoteEdit(editId, {
+      await handleQuoteEdit(editId, {
         author: data.author,
         quote: data.quote,
         category: data.category,
@@ -195,36 +196,56 @@ export default function AddNewQuotePage() {
                     )
                   )}
                 </Field>
+
+                {/* AŞAĞIDAKİ SELECT KISMI CONTROLLER İLE SARMALANDI */}
                 <Field>
                   <FieldLabel htmlFor="category">Tag</FieldLabel>
-                  <Select name="category" defaultValue={state.data?.category}>
-                    <SelectTrigger
-                      id="category"
-                      aria-describedby="category-error"
-                      aria-invalid={!!state.errors?.fieldErrors?.category}
-                      {...register("category")}
-                    >
-                      <SelectValue placeholder="Select a category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Categories</SelectLabel>
-                        {categories.map((category) => (
-                          <SelectItem key={category} value={category}>
-                            {category}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
 
-                  {state.errors?.fieldErrors?.category && (
+                  <Controller
+                    control={control}
+                    name="category"
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value || state.data?.category}
+                      >
+                        <SelectTrigger
+                          id="category"
+                          aria-describedby="category-error"
+                          aria-invalid={
+                            !!state.errors?.fieldErrors?.category ||
+                            !!clientSideErrors.category
+                          }
+                        >
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Categories</SelectLabel>
+                            {categories.map((category) => (
+                              <SelectItem key={category} value={category}>
+                                {category}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+
+                  {(clientSideErrors.category ||
+                    state.errors?.fieldErrors?.category) && (
                     <FieldError
                       id="category-error"
                       aria-live="polite"
-                      errors={state.errors?.fieldErrors?.category}
+                      errors={
+                        clientSideErrors.category
+                          ? [{ message: clientSideErrors.category.message }]
+                          : state.errors?.fieldErrors?.category
+                      }
                     >
-                      {state.errors?.fieldErrors?.category}
+                      {clientSideErrors.category?.message ||
+                        state.errors?.fieldErrors?.category}
                     </FieldError>
                   )}
                 </Field>
