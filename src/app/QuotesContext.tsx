@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { getRandomNumber } from "@/utils/helper-functions";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Quote, QuoteContextInterface } from "@/types/quotes";
+import { toast } from "sonner";
 
 const InitialQuotesContext = {
   quotes: [],
@@ -31,8 +32,6 @@ export function QuotesContextProvider({
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const currentQuote = quotes[quoteIndex];
 
   useEffect(() => {
     async function fetchData() {
@@ -115,8 +114,12 @@ export function QuotesContextProvider({
       }
       setQuotes((prevQuotes) => prevQuotes.filter((q) => q._id !== quoteId));
       handleQuoteIndexUpdate();
+      toast.success("Quote deleted successfully!");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete quote!");
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to delete quote!";
+      setError(errorMessage);
+      toast.error(errorMessage);
     }
   }
 

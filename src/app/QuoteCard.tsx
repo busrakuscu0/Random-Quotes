@@ -72,38 +72,46 @@ export function QuoteCard({
             Next Quote
           </Button>
         </div>
-        <div className="flex gap-1 md:gap-2">
-          <Link href={`/user/quotes/new?id=${id}`}>
-            <Button variant="secondary" size="icon" className="px-4 md:px-6">
-              <PencilSimpleIcon />
-            </Button>
-          </Link>
-
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
+        {user ? (
+          <div className="flex gap-1 md:gap-2">
+            <Link href={`/user/quotes/new?id=${id}`}>
               <Button variant="secondary" size="icon" className="px-4 md:px-6">
-                <TrashIcon />
+                <PencilSimpleIcon />
               </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This will permanently delete the quote.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  variant="destructive"
-                  onClick={() => handleQuoteDelete(id)}
+            </Link>
+
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="px-4 md:px-6"
                 >
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
+                  <TrashIcon />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent size="sm">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will permanently delete the quote.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel variant="outline">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    variant="destructive"
+                    onClick={() => handleQuoteDelete(id)}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        ) : null}
       </CardContent>
     </Card>
   );

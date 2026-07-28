@@ -78,15 +78,15 @@ export default function Home() {
     );
   }
 
-  const { quote, author, likedBy } = currentQuote;
+  const { _id, quote, author, likedBy } = currentQuote;
 
   return (
     <main className="min-h-screen flex items-center justify-center">
       <QuoteCard
-        id={currentQuote._id}
-        quote={currentQuote.quote}
-        author={currentQuote.author}
-        likedBy={currentQuote.likedBy}
+        id={_id}
+        quote={quote}
+        author={author}
+        likedBy={likedBy}
         handleToggleLike={handleToggleLike}
         handleQuoteIndexUpdate={handleQuoteIndexUpdate}
         handleQuoteDelete={handleQuoteDelete}

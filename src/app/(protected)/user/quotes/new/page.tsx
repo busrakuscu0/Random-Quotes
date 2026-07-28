@@ -55,7 +55,7 @@ export default function AddNewQuotePage() {
     register,
     reset,
     handleSubmit,
-    control, // CONTROL EKLENDİ
+    control,
     formState: { errors: clientSideErrors },
   } = useForm<NewQuoteInput>({
     mode: "onBlur",
@@ -197,10 +197,8 @@ export default function AddNewQuotePage() {
                   )}
                 </Field>
 
-                {/* AŞAĞIDAKİ SELECT KISMI CONTROLLER İLE SARMALANDI */}
                 <Field>
                   <FieldLabel htmlFor="category">Tag</FieldLabel>
-
                   <Controller
                     control={control}
                     name="category"
