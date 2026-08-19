@@ -1,19 +1,22 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
 import {
   Item,
   ItemContent,
   ItemDescription,
   ItemTitle,
 } from "@/components/ui/item";
-import { useContext } from "react";
-import { QuotesContext } from "@/app/QuotesContext";
 import { EmptyLikedQuotes } from "./EmptyLikedQuotes";
 import { H3 } from "@/components/typography/H3";
+import { auth0 } from "@/lib/auth0";
+import { getLikedQuotes } from "@/services/quoteService";
+import UnlikeButton from "./UnlikeButton";
 
-export function LikedQuotes() {
-  const { likedQuotes, handleToggleLike } = useContext(QuotesContext);
+export async function LikedQuotes() {
+  const session = await auth0.getSession();
+
+  if (!session || !session.user) {
+    return <p>Please log in to view your liked quotes.</p>;
+  }
+  const likedQuotes = await getLikedQuotes(session.user.sub);
 
   if (!likedQuotes || likedQuotes.length === 0) {
     return <EmptyLikedQuotes />;
@@ -22,7 +25,7 @@ export function LikedQuotes() {
   return (
     <>
       <H3 element={"h1"}>My Liked Quotes</H3>
-      <div className="flex w-full max-w-sm md:max-w-lg flex-col gap-6">
+      <div className="flex w-full max-w-sm md:max-w-lg flex-col gap-4 md:gap-6">
         {likedQuotes.map(({ _id, quote, author }) => (
           <Item key={String(_id) || quote} variant="outline">
             <ItemContent>
@@ -31,9 +34,7 @@ export function LikedQuotes() {
                 <ItemDescription> - {author}</ItemDescription>
               </div>
               <div>
-                <Button size="xs" onClick={() => handleToggleLike(quote)}>
-                  Unlike
-                </Button>
+                <UnlikeButton quoteId={String(_id)} />
               </div>
             </ItemContent>
           </Item>

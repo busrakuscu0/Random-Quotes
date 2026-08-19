@@ -3,8 +3,9 @@
 import { auth0 } from "@/lib/auth0";
 import * as z from "zod";
 import { AddNewQuoteState, NewQuoteSchema } from "@/types/quotes";
-import { Collections, getDb } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { ObjectId } from "mongodb";
+import { createQuote, updateUserQuote } from "@/services/quoteService";
 
 export async function addNewQuote(
   _currentState: AddNewQuoteState,
@@ -39,23 +40,21 @@ export async function addNewQuote(
       data: rawData as unknown as z.infer<typeof NewQuoteSchema>,
     };
   } else {
-    const db = await getDb();
-    const col = db.collection(Collections.quotes);
     const now = new Date();
 
     if (quoteId) {
-      await col.updateOne(
-        { _id: new Object(quoteId) },
-        {
-          $set: {
-            quote: validationOutput.data.quote,
-            author: validationOutput.data.author,
-            category: rawData.category,
-            updatedAt: now,
-            adminApproved: false,
-          },
-        },
-      );
+      if (!ObjectId.isValid(quoteId)) {
+        return {
+          success: false,
+          message: "Invalid quote ID.",
+        };
+      }
+      await updateUserQuote(quoteId, user.sub, {
+        quote: validationOutput.data.quote,
+        author: validationOutput.data.author,
+        category: rawData.category,
+        adminApproved: false,
+      });
     } else {
       const newQuote = {
         quote: validationOutput.data.quote,
@@ -67,7 +66,7 @@ export async function addNewQuote(
         updatedAt: now,
       };
 
-      await col.insertOne(newQuote);
+      await createQuote(newQuote);
     }
 
     revalidatePath("/");

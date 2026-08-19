@@ -1,12 +1,8 @@
-import { Collections, getDb } from "@/lib/db";
-import { Quote } from "@/types/quotes";
+import { getAllQuotes } from "@/services/quoteService";
 
 export async function GET() {
   try {
-    const db = await getDb();
-    const col = db.collection<Quote>(Collections.quotes);
-
-    const quotes = await col.find({}).toArray();
+    const quotes = await getAllQuotes();
 
     return Response.json({ quotes });
   } catch (error) {

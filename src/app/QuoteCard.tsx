@@ -19,19 +19,32 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Spinner } from "@/components/ui/spinner";
 
 export function QuoteCard({
   id,
   handleToggleLike,
   likedBy,
+  createdBy,
   quote,
   author,
   handleQuoteIndexUpdate,
   handleQuoteDelete,
 }: QuoteCardProps) {
   const { user, isLoading } = useUser();
+  const isOwner = user?.sub === createdBy;
 
-  if (isLoading) return <></>;
+  if (isLoading)
+    return (
+      <>
+        <div className="flex justify-center mt-30 md:mt-60">
+          <Button size="lg" disabled>
+            <Spinner data-icon="inline-start" />
+            Loading...
+          </Button>
+        </div>
+      </>
+    );
 
   const hasLiked = Boolean(user?.sub && likedBy?.includes(user.sub));
 
@@ -72,7 +85,7 @@ export function QuoteCard({
             Next Quote
           </Button>
         </div>
-        {user ? (
+        {isOwner ? (
           <div className="flex gap-1 md:gap-2">
             <Link href={`/user/quotes/new?id=${id}`}>
               <Button variant="secondary" size="icon" className="px-4 md:px-6">

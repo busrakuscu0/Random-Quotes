@@ -7,7 +7,7 @@ export const categories = [
   "Inspirational",
   "Motivational",
   "Wisdom",
-];
+] as const;
 
 export const NewQuoteSchema = z.object({
   author: z
@@ -44,7 +44,7 @@ export interface Quote {
   _id: string;
   quote: string;
   author: string;
-  category: string;
+  category: (typeof categories)[number];
   likedBy?: string[];
   createdBy: string;
   adminApproved: boolean;
@@ -56,6 +56,7 @@ export interface QuoteCardProps {
   id: string;
   handleToggleLike: (userSub: string) => void;
   likedBy: string[];
+  createdBy: string;
   quote: string;
   author: string;
   handleQuoteIndexUpdate: () => void;

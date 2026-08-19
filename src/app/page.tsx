@@ -1,10 +1,3 @@
-"use client";
-
-import { useContext } from "react";
-import { QuotesContext } from "@/app/QuotesContext";
-import { QuoteCard } from "@/app/QuoteCard";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Empty,
@@ -16,80 +9,56 @@ import {
 } from "@/components/ui/empty";
 import { FileMinusIcon, WarningCircleIcon } from "@phosphor-icons/react";
 import Link from "next/link";
+import QuoteDisplayer from "./QuoteDisplayer";
+import { getAllQuotes } from "@/services/quoteService";
+import { auth0 } from "@/lib/auth0";
 
-export default function Home() {
-  const {
-    quotes,
-    quoteIndex,
-    isLoading,
-    error,
-    handleQuoteIndexUpdate,
-    handleToggleLike,
-    handleQuoteDelete,
-  } = useContext(QuotesContext);
+export default async function Home() {
+  try {
+    const quotes = await getAllQuotes();
 
-  if (isLoading) {
+    const session = await auth0.getSession();
+    const userSub = session?.user?.sub;
+
+    if (!quotes || quotes.length === 0) {
+      return (
+        <main>
+          <div className="border rounded-md bg-accent max-w-md mx-auto my-20 md:my-36">
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <FileMinusIcon />
+                </EmptyMedia>
+                <EmptyTitle>No Quotes Yet</EmptyTitle>
+                <EmptyDescription>
+                  Add one or approve quotes in the database.
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyContent>
+                <Link href="/user/quotes/new">Add New Quotes</Link>
+              </EmptyContent>
+            </Empty>
+          </div>
+        </main>
+      );
+    }
+
     return (
-      <main>
-        <div className="flex justify-center mt-30 md:mt-60">
-          <Button size="lg" disabled>
-            <Spinner data-icon="inline-start" />
-            Loading...
-          </Button>
-        </div>
+      <main className="min-h-screen flex items-center justify-center">
+        <QuoteDisplayer initialQuotes={quotes} userSub={userSub} />
       </main>
     );
-  }
-
-  if (error) {
+  } catch (error) {
     return (
-      <main>
+      <main className="min-h-screen flex flex-col items-center justify-center">
         <Alert variant="destructive" className="max-w-sm md:max-w-md">
-          <WarningCircleIcon />
+          <WarningCircleIcon size={24} />
           <AlertTitle>Loading failed</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
+          <AlertDescription>
+            Failed to fetch quotes from the database.
+          </AlertDescription>
         </Alert>
       </main>
     );
   }
-
-  const currentQuote = quotes[quoteIndex];
-  if (!currentQuote) {
-    return (
-      <main>
-        <div className="border rounded-md bg-accent max-w-md mx-auto my-20 md:my-36">
-          <Empty>
-            <EmptyHeader>
-              <EmptyMedia variant="icon">
-                <FileMinusIcon />
-              </EmptyMedia>
-              <EmptyTitle>No Quotes Yet</EmptyTitle>
-              <EmptyDescription>
-                Add one or approve quotes in the database.
-              </EmptyDescription>
-            </EmptyHeader>
-            <EmptyContent>
-              <Link href="/user/quotes/">Add New Quotes</Link>
-            </EmptyContent>
-          </Empty>
-        </div>
-      </main>
-    );
-  }
-
-  const { _id, quote, author, likedBy } = currentQuote;
-
-  return (
-    <main className="min-h-screen flex items-center justify-center">
-      <QuoteCard
-        id={_id}
-        quote={quote}
-        author={author}
-        likedBy={likedBy}
-        handleToggleLike={handleToggleLike}
-        handleQuoteIndexUpdate={handleQuoteIndexUpdate}
-        handleQuoteDelete={handleQuoteDelete}
-      />
-    </main>
-  );
 }

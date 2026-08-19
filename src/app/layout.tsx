@@ -1,6 +1,5 @@
 import { Playfair_Display, Inter } from "next/font/google";
 import { TopNav } from "@/app/Navbar";
-import { QuotesContextProvider } from "@/app/QuotesContext";
 import "./globals.css";
 import { RootLayoutInterface } from "@/types/quotes";
 import { Toaster } from "sonner";
@@ -27,10 +26,8 @@ export default function RootLayout({ children }: RootLayoutInterface) {
       className={`${inter.variable} ${playfairDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-muted text-foreground">
-        <QuotesContextProvider>
-          <TopNav />
-          {children}
-        </QuotesContextProvider>
+        <TopNav />
+        {children}
         <Toaster />
       </body>
     </html>

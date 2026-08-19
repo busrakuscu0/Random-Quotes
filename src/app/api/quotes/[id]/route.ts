@@ -1,22 +1,34 @@
-import { Collections, getDb } from "@/lib/db";
+import { auth0 } from "@/lib/auth0";
+import { getDb } from "@/lib/db";
+import { deleteUserQuote, updateUserQuote } from "@/services/quoteService";
 import { ObjectId } from "mongodb";
 
 export async function PUT(
   request: Request,
   context: { params: Promise<{ id: string }> | { id: string } },
 ) {
+  const session = await auth0.getSession();
+
+  if (!session || !session.user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   try {
     const quoteId = (await context.params).id;
+
+    if (!ObjectId.isValid(quoteId)) {
+      return Response.json({ error: "Invalid quote ID." }, { status: 400 });
+    }
+
     const { quote, author, category } = await request.json();
 
     const db = await getDb();
 
-    const result = await db
-      .collection(Collections.quotes)
-      .updateOne(
-        { _id: new ObjectId(quoteId) },
-        { $set: { quote, author, category, updatedAt: new Date() } },
-      );
+    const result = await updateUserQuote(quoteId, session.user.sub, {
+      quote,
+      author,
+      category,
+    });
 
     if (result.matchedCount === 0) {
       return Response.json({ error: "Quote not found." }, { status: 404 });
@@ -38,18 +50,20 @@ export async function DELETE(
   _request: Request,
   context: { params: Promise<{ id: string }> | { id: string } },
 ) {
+  const session = await auth0.getSession();
+
+  if (!session || !session.user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   try {
     const quoteId = (await context.params).id;
 
-    if (!quoteId) {
-      return Response.json({ error: "Quote ID is missing." }, { status: 400 });
+    if (!ObjectId.isValid(quoteId)) {
+      return Response.json({ error: "Invalid quote ID." }, { status: 400 });
     }
 
-    const db = await getDb();
-
-    const result = await db.collection(Collections.quotes).deleteOne({
-      _id: new ObjectId(quoteId),
-    });
+    const result = await deleteUserQuote(quoteId, session.user.sub);
 
     if (result.deletedCount === 0) {
       return Response.json({ error: "Quote not found." }, { status: 404 });
