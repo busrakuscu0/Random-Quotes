@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { Select as SelectPrimitive } from "radix-ui";
+import type { ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
 import { CaretDownIcon, CheckIcon, CaretUpIcon } from "@phosphor-icons/react";
@@ -54,7 +54,7 @@ function SelectContent({
   position = "item-aligned",
   align = "center",
   ...props
-}) {
+}: ComponentProps<typeof SelectPrimitive.Content>) {
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
@@ -70,7 +70,7 @@ function SelectContent({
         align={align}
         {...props}
       >
-        <SelectScrollUpButton />
+        <SelectScrollUpButton className="" />
         <SelectPrimitive.Viewport
           data-position={position}
           className={cn(
@@ -80,7 +80,7 @@ function SelectContent({
         >
           {children}
         </SelectPrimitive.Viewport>
-        <SelectScrollDownButton />
+        <SelectScrollDownButton className="" />
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
   );
@@ -96,10 +96,11 @@ function SelectLabel({ className = "", ...props }) {
   );
 }
 
-function SelectItem({ className = "", children, ...props }) {
+function SelectItem({ className = "", children, value, ...props }) {
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
+      value={value}
       className={cn(
         "relative flex w-full cursor-default items-center gap-2.5 rounded-xl py-2 pr-8 pl-3 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className,

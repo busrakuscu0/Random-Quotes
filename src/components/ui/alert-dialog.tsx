@@ -1,10 +1,20 @@
 "use client";
 
-import * as React from "react";
 import { AlertDialog as AlertDialogPrimitive } from "radix-ui";
+import type { ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+
+type AlertDialogButtonVariant =
+  | "link"
+  | "default"
+  | "outline"
+  | "secondary"
+  | "ghost"
+  | "destructive";
+
+type AlertDialogButtonSize = ComponentProps<typeof Button>["size"];
 
 function AlertDialog({ ...props }) {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
@@ -38,7 +48,7 @@ function AlertDialogOverlay({ className, ...props }) {
 function AlertDialogContent({ className = "", size = "default", ...props }) {
   return (
     <AlertDialogPortal>
-      <AlertDialogOverlay />
+      <AlertDialogOverlay className={undefined} />
       <AlertDialogPrimitive.Content
         data-slot="alert-dialog-content"
         data-size={size}
@@ -119,8 +129,8 @@ function AlertDialogDescription({ className = "", ...props }) {
 
 function AlertDialogAction({
   className = "",
-  variant = "default",
-  size = "default",
+  variant = "default" as AlertDialogButtonVariant,
+  size = "default" as AlertDialogButtonSize,
   ...props
 }) {
   return (
@@ -136,8 +146,8 @@ function AlertDialogAction({
 
 function AlertDialogCancel({
   className = "",
-  variant = "outline",
-  size = "default",
+  variant = "outline" as AlertDialogButtonVariant,
+  size = "default" as AlertDialogButtonSize,
   ...props
 }) {
   return (

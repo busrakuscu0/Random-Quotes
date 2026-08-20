@@ -1,3 +1,4 @@
+"use client";
 import { H3Interface } from "@/types/quotes";
 import { ReactNode } from "react";
 
