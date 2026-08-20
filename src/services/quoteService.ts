@@ -1,6 +1,6 @@
 import { Collections, getDb } from "@/lib/db";
-import { Quote } from "@/types/quotes";
 import { ObjectId } from "mongodb";
+import { cache } from "react";
 
 export async function createQuote(quoteData: any) {
   const db = await getDb();
@@ -32,19 +32,43 @@ export async function deleteUserQuote(quoteId: string, userId: string) {
   });
 }
 
-export async function getAllQuotes() {
+export const getAllQuotes = cache(async () => {
+  const db = await getDb();
+  const quotes = await db.collection(Collections.quotes).find({}).toArray();
+
+  return quotes.map((quote) => ({
+    ...quote,
+    _id: quote._id.toString(),
+  }));
+});
+
+export const getLikedQuotes = cache(async (userId: string) => {
   const db = await getDb();
 
-  return await db.collection<Quote>(Collections.quotes).find({}).toArray();
-}
-
-export async function getLikedQuotes(userId: string) {
-  const db = await getDb();
-
-  return await db
+  const quotes = await db
     .collection(Collections.quotes)
     .find({ likedBy: userId })
     .toArray();
+
+  return quotes.map((quote) => ({
+    ...quote,
+    _id: quote._id.toString(),
+  }));
+});
+
+export async function getQuoteById(id: string) {
+  const db = await getDb();
+
+  const quote = await db.collection(Collections.quotes).findOne({
+    _id: new ObjectId(id),
+  });
+
+  if (!quote) return null;
+
+  return {
+    ...quote,
+    _id: quote._id.toString(),
+  };
 }
 
 export async function toggleLikeInQuote(quoteId: string, userId: string) {

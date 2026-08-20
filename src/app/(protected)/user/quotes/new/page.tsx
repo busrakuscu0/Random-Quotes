@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useActionState } from "react";
 import { addNewQuote } from "./action";
 import { Spinner } from "@/components/ui/spinner";
-import { CheckCircleIcon } from "@phosphor-icons/react";
+import { CheckCircleIcon } from "@/components/Icons";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {

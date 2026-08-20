@@ -7,7 +7,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { FileMinusIcon, WarningCircleIcon } from "@phosphor-icons/react";
+import { FileMinusIcon, WarningCircleIcon } from "@/components/Icons";
 import Link from "next/link";
 import QuoteDisplayer from "./QuoteDisplayer";
 import { getAllQuotes } from "@/services/quoteService";
@@ -45,7 +45,12 @@ export default async function Home() {
 
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <QuoteDisplayer initialQuotes={quotes} userSub={userSub} />
+        <QuoteDisplayer
+          initialQuotes={
+            quotes as Parameters<typeof QuoteDisplayer>[0]["initialQuotes"]
+          }
+          userSub={userSub}
+        />
       </main>
     );
   } catch (error) {

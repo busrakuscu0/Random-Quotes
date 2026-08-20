@@ -8,7 +8,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { HeartHalfIcon } from "@phosphor-icons/react";
+import { HeartHalfIcon } from "@/components/Icons";
 
 export function EmptyLikedQuotes() {
   return (

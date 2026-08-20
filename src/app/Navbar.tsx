@@ -24,7 +24,7 @@ const appRoutes = [
   },
 ];
 
-export function TopNav() {
+export default function TopNav() {
   const { user, isLoading } = useUser();
 
   if (isLoading) return <></>;

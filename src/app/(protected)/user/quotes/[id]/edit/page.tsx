@@ -1,16 +1,15 @@
+import { getQuoteById } from "@/services/quoteService";
+import EditQuoteClient from "./EditQuoteClient";
 import { notFound } from "next/navigation";
-import EditQuoteClient from "../EditQuoteClient";
 
 export default async function EditQuotePage({
   params,
 }: {
   params: { id: string };
 }) {
-  const { id } = params;
+  const { id } = await params;
 
-  const response = await fetch("/api/quotes");
-  const data = await response.json();
-  const quoteToEdit = data.quotes.find((q: any) => q._id === id);
+  const quoteToEdit = await getQuoteById(id);
 
   if (!quoteToEdit) {
     return notFound();

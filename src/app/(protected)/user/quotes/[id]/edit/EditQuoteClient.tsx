@@ -38,6 +38,7 @@ export default function EditQuoteClient({
 
       toast.success("Quote updated successfully!");
       router.push("/");
+      router.refresh();
     } catch (error) {
       toast.error("An error occurred while updating the quote.");
     }

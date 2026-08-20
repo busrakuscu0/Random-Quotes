@@ -6,7 +6,7 @@ import { H6 } from "@/components/typography/H6";
 import { useUser } from "@auth0/nextjs-auth0";
 import { toast } from "sonner";
 import { QuoteCardProps } from "@/types/quotes";
-import { HeartIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react";
+import { HeartIcon, PencilSimpleIcon, TrashIcon } from "@/components/Icons";
 import Link from "next/link";
 import {
   AlertDialog,
@@ -87,7 +87,7 @@ export function QuoteCard({
         </div>
         {isOwner ? (
           <div className="flex gap-1 md:gap-2">
-            <Link href={`/user/quotes/new?id=${id}`}>
+            <Link href={`/user/quotes/${id}/edit`}>
               <Button variant="secondary" size="icon" className="px-4 md:px-6">
                 <PencilSimpleIcon />
               </Button>

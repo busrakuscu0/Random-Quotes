@@ -1,5 +1,5 @@
 import { Playfair_Display, Inter } from "next/font/google";
-import { TopNav } from "@/app/Navbar";
+import TopNav from "@/app/Navbar";
 import "./globals.css";
 import { RootLayoutInterface } from "@/types/quotes";
 import { Toaster } from "sonner";
